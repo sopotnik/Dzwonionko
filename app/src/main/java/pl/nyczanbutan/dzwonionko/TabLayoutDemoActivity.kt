@@ -26,9 +26,9 @@ class TabLayoutDemoActivity : AppCompatActivity() {
 
     private fun configureTabLayout() {
 
-        tab_layout.addTab(tab_layout.newTab().setText("Tab 1 Item"))
-        tab_layout.addTab(tab_layout.newTab().setText("Tab 2 Item"))
-        tab_layout.addTab(tab_layout.newTab().setText("Tab 3 Item"))
+        tab_layout.addTab(tab_layout.newTab().setText("Telefon"))
+        tab_layout.addTab(tab_layout.newTab().setText("Historia"))
+        tab_layout.addTab(tab_layout.newTab().setText("Konto"))
 
         val adapter = TabPagerAdapter(supportFragmentManager,
                 tab_layout.tabCount)
