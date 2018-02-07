@@ -14,6 +14,8 @@ class TabLayoutDemoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val klawiatura = intent.getIntExtra("klawiatura", 0)
+
         setContentView(R.layout.activity_tab_layout_demo)
         setSupportActionBar(toolbar)
 

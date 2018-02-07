@@ -56,10 +56,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         btnlogin.setOnClickListener {
             //attemptLogin()
-            val fm = supportFragmentManager
-            val fragment = klawiatura()
-            fm.beginTransaction().add(R.id.frameLayout, fragment).commit()
-
+            val intent = Intent(this, TabLayoutDemoActivity::class.java)
+            intent.putExtra("klawiaura", 0)
+            startActivity(intent)
         }
 
         btnregister.setOnClickListener {
