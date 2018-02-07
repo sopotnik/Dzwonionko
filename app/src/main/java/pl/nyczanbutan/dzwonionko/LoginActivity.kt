@@ -20,10 +20,21 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import android.app.FragmentTransaction
+import android.app.PendingIntent.getActivity
 import android.content.Intent
+import android.util.Log
+
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_tab_layout_demo.*
+import java.io.BufferedInputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
 /**
  * A login screen that offers login via email/password.
@@ -49,10 +60,13 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         btnlogin.setOnClickListener {
             attemptLogin()
-                val intent = Intent(this, TabLayoutDemoActivity::class.java)
-                intent.putExtra("klawiatura", 0)
-                startActivity(intent)
-        }
+            var helper:NetworkHelper = NetworkHelper()
+            var data = NetworkHelper().execute(URL("http://88.156.94.28:5000/users"))
+            Log.d("-----------------------", data.get())
+
+            val intent = Intent(this, TabLayoutDemoActivity::class.java)
+            intent.putExtra("klawiaura", 0)
+            startActivity(intent)        }
 
         btnregister.setOnClickListener {
             val intent = Intent(this, Register::class.java)
