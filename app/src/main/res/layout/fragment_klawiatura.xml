@@ -191,7 +191,7 @@
                 android:background="#8C9EFF"
                 android:textColor="@android:color/black"
                 android:text="*"
-                android:textSize="20dp" />
+                android:textSize="40dp"  />
 
             <Button
                 android:id="@+id/btn0"
@@ -201,16 +201,17 @@
                 android:background="#8C9EFF"
                 android:textColor="@android:color/black"
                 android:text="0"
-                android:textSize="40dp" />
+                android:textSize="40dp"  />
 
             <Button
                 android:id="@+id/btnhash"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#8C9EFF"
+                android:textColor="@android:color/black"
                 android:text="#"
-                android:textSize="20dp" />
+                android:textSize="40dp"  />
         </LinearLayout>
     </LinearLayout>
 
