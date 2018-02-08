@@ -60,9 +60,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         btnlogin.setOnClickListener {
             attemptLogin()
-            var helper:NetworkHelper = NetworkHelper()
+            /*var helper:NetworkHelper = NetworkHelper()
             var data = NetworkHelper().execute(URL("http://88.156.94.28:5000/users"))
-            Log.d("-----------------------", data.get())
+            Log.d("-----------------------", data.get())*/
 
             val intent = Intent(this, TabLayoutDemoActivity::class.java)
             intent.putExtra("klawiaura", 0)
