@@ -20,21 +20,13 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
-import android.app.FragmentTransaction
-import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.util.Log
-
+import android.widget.Button
+import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_tab_layout_demo.*
-import java.io.BufferedInputStream
-import java.net.HttpURLConnection
-import java.net.URL
 
 /**
  * A login screen that offers login via email/password.
@@ -50,23 +42,48 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         setContentView(R.layout.activity_login)
         // Set up the login form.
         populateAutoComplete()
-        password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
+        passwordpassword.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 attemptLogin()
                 return@OnEditorActionListener true
             }
             false
+
         })
+        var currentUser: UserModel
+        val requestHandler = GetHttpRequestHandler()
+        requestHandler.execute("http://88.156.94.28:5000/users")
+        val response = requestHandler.get()
+        val creator = JsonHandler()
+        var users = creator.convertFromJson(response)
+        var userObjectList = ArrayList<UserModel>()
+        for(user in users){
+            userObjectList.add(UserModel(user))
+        }
+        if(userObjectList.isEmpty()) {
+            val button = findViewById<Button>(R.id.btnlogin)
+            button.isEnabled = false
+        }
+        else {
+            btnlogin.setOnClickListener {
+                val login = (findViewById<EditText>(R.id.loginlogin)).text.toString()
+                val password = (findViewById<EditText>(R.id.passwordpassword)).text.toString()
+                //attemptLogin()
+                Log.d("tu", "3")
+                for (user in userObjectList) {
+                    if (login == user.login) {
+                        if (password == user.password) {
 
-        btnlogin.setOnClickListener {
-            attemptLogin()
-            /*var helper:NetworkHelper = NetworkHelper()
-            var data = NetworkHelper().execute(URL("http://88.156.94.28:5000/users"))
-            Log.d("-----------------------", data.get())*/
-
-            val intent = Intent(this, TabLayoutDemoActivity::class.java)
-            intent.putExtra("klawiaura", 0)
-            startActivity(intent)        }
+                            currentUser = user
+                            val intent = Intent(this, TabLayoutDemoActivity::class.java)
+                            intent.putExtra("currentUser", currentUser.id)
+                            startActivity(intent)
+                            break
+                        }
+                    }
+                }
+            }
+        }
 
         btnregister.setOnClickListener {
             val intent = Intent(this, Register::class.java)
@@ -91,7 +108,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             return true
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(email, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(loginlogin, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok,
                             { requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS) })
         } else {
@@ -124,31 +141,31 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
 
         // Reset errors.
-        email.error = null
-        password.error = null
+        loginlogin.error = null
+        passwordpassword.error = null
 
         // Store values at the time of the login attempt.
-        val emailStr = email.text.toString()
-        val passwordStr = password.text.toString()
+        val emailStr = loginlogin.text.toString()
+        val passwordStr = passwordpassword.text.toString()
 
         var cancel = false
         var focusView: View? = null
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(passwordStr) && !isPasswordValid(passwordStr)) {
-            password.error = getString(R.string.error_invalid_password)
-            focusView = password
+            passwordpassword.error = getString(R.string.error_invalid_password)
+            focusView = passwordpassword
             cancel = true
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(emailStr)) {
-            email.error = getString(R.string.error_field_required)
-            focusView = email
+            loginlogin.error = getString(R.string.error_field_required)
+            focusView = loginlogin
             cancel = true
         } else if (!isEmailValid(emailStr)) {
-            email.error = getString(R.string.error_invalid_email)
-            focusView = email
+            loginlogin.error = getString(R.string.error_invalid_email)
+            focusView = loginlogin
             cancel = true
         }
 
@@ -248,7 +265,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         val adapter = ArrayAdapter(this@LoginActivity,
                 android.R.layout.simple_dropdown_item_1line, emailAddressCollection)
 
-        email.setAdapter(adapter)
+        loginlogin.setAdapter(adapter)
     }
 
     object ProfileQuery {
@@ -292,8 +309,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             if (success!!) {
                 finish()
             } else {
-                password.error = getString(R.string.error_incorrect_password)
-                password.requestFocus()
+                passwordpassword.error = getString(R.string.error_incorrect_password)
+                passwordpassword.requestFocus()
             }
         }
 
