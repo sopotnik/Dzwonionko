@@ -58,14 +58,14 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Imię"
-            android:inputType="phone" />
+            android:inputType="textPersonName" />
         <EditText
             android:id="@+id/update_surname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Nazwisko"
-            android:inputType="phone" />
+            android:inputType="textPersonName" />
         <EditText
             android:id="@+id/update_birth_date"
             android:layout_width="match_parent"
