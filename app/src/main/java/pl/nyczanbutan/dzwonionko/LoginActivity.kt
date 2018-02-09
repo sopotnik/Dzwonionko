@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         btnlogin.setOnClickListener {
             try {
                 val requestHandler = GetHttpRequestHandler()
-                requestHandler.execute("http://88.156.94.28:5000/users")
+                requestHandler.execute("http://127.0.0.1:5000/users")
                 val response = requestHandler.get()
                 val creator = JsonHandler()
                 var users = creator.convertFromJson(response)

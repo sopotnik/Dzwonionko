@@ -60,7 +60,7 @@ class jam : Fragment() {
                 val creator = JsonHandler()
                 val json = creator.convertToJson(map)
                 val requestHandler = PutHttpRequestHandler()
-                requestHandler.execute("http://88.156.94.28:5000/users/${TabLayoutDemoActivity.currentUser}", json)
+                requestHandler.execute("http://127.0.0.1:5000/users/${TabLayoutDemoActivity.currentUser}", json)
                 if(requestHandler.get() != 200){
                     Snackbar.make(view, "Something was wrong", Snackbar.LENGTH_SHORT).show()
                 }

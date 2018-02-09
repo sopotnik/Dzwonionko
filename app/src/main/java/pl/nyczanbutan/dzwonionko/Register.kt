@@ -30,7 +30,7 @@ class Register : AppCompatActivity() {
             val creator = JsonHandler()
             val json = creator.convertToJson(jsonMap)
             Log.d("json", json)
-            val requestHandler = PostHttpRequestHandler().execute("http://88.156.94.28:5000/users", json)
+            val requestHandler = PostHttpRequestHandler().execute("http://127.0.0.1:5000/users", json)
             val responseCode = requestHandler.get()
             Log.d("ResponseCode", responseCode.toString())
             if (responseCode == 201){
