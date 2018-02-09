@@ -12,34 +12,28 @@ import kotlinx.android.synthetic.main.activity_tab_layout_demo.*
 
 class TabLayoutDemoActivity : AppCompatActivity() {
 
+    companion object {
+        var currentUser = ""
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val klawiatura = intent.getIntExtra("klawiatura", 0)
-
+        currentUser = intent.getStringExtra("currentUser")
         setContentView(R.layout.activity_tab_layout_demo)
         setSupportActionBar(toolbar)
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
         configureTabLayout()
     }
 
     private fun configureTabLayout() {
-
         tab_layout.addTab(tab_layout.newTab().setText("Telefon"))
-        tab_layout.addTab(tab_layout.newTab().setText("Historia"))
+        tab_layout.addTab(tab_layout.newTab().setText("Kontakty"))
         tab_layout.addTab(tab_layout.newTab().setText("Konto"))
 
-        val adapter = TabPagerAdapter(supportFragmentManager,
-                tab_layout.tabCount)
+        val adapter = TabPagerAdapter(supportFragmentManager, tab_layout.tabCount)
         pager.adapter = adapter
 
-        pager.addOnPageChangeListener(
-                TabLayout.TabLayoutOnPageChangeListener(tab_layout))
-        tab_layout.addOnTabSelectedListener(object :
-                TabLayout.OnTabSelectedListener {
+
+        pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
+        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 pager.currentItem = tab.position
             }

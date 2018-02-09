@@ -51,37 +51,39 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         })
         var currentUser: UserModel
-        val requestHandler = GetHttpRequestHandler()
-        requestHandler.execute("http://88.156.94.28:5000/users")
-        val response = requestHandler.get()
-        val creator = JsonHandler()
-        var users = creator.convertFromJson(response)
-        var userObjectList = ArrayList<UserModel>()
-        for(user in users){
-            userObjectList.add(UserModel(user))
-        }
-        if(userObjectList.isEmpty()) {
-            val button = findViewById<Button>(R.id.btnlogin)
-            button.isEnabled = false
-        }
-        else {
-            btnlogin.setOnClickListener {
-                val login = (findViewById<EditText>(R.id.loginlogin)).text.toString()
-                val password = (findViewById<EditText>(R.id.passwordpassword)).text.toString()
-                //attemptLogin()
-                Log.d("tu", "3")
-                for (user in userObjectList) {
-                    if (login == user.login) {
-                        if (password == user.password) {
-
-                            currentUser = user
-                            val intent = Intent(this, TabLayoutDemoActivity::class.java)
-                            intent.putExtra("currentUser", currentUser.id)
-                            startActivity(intent)
-                            break
+        btnlogin.setOnClickListener {
+            try {
+                val requestHandler = GetHttpRequestHandler()
+                requestHandler.execute("http://88.156.94.28:5000/users")
+                val response = requestHandler.get()
+                val creator = JsonHandler()
+                var users = creator.convertFromJson(response)
+                var userObjectList = ArrayList<UserModel>()
+                if (users.isEmpty()) {
+                    val button = findViewById<Button>(R.id.btnlogin)
+                    button.isEnabled = false
+                } else {
+                    for (user in users) {
+                        userObjectList.add(UserModel(user))
+                    }
+                    val login = (findViewById<EditText>(R.id.loginlogin)).text.toString()
+                    val password = (findViewById<EditText>(R.id.passwordpassword)).text.toString()
+                    for (user in userObjectList) {
+                        if (login == user.login) {
+                            if (password == user.password) {
+                                currentUser = user
+                                val intent = Intent(this, TabLayoutDemoActivity::class.java)
+                                intent.putExtra("currentUser", currentUser.login)
+                                startActivity(intent)
+                                break
+                            }
                         }
                     }
                 }
+            }
+            catch(exception: Exception)
+            {
+
             }
         }
 

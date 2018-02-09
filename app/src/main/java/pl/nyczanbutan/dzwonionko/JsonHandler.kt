@@ -1,15 +1,9 @@
 package pl.nyczanbutan.dzwonionko
-
-import android.util.Log
 import com.google.gson.Gson
 
 class JsonHandler {
-    fun convertToJson(toConvert:HashMap<String, String>, method: String): String{
-        var jsonString = "{"
-        if (method == "POST"){
-            jsonString = "$jsonString\"secret\": \"SecretToken\","
-        }
-
+    fun convertToJson(toConvert:HashMap<String, String>): String{
+        var jsonString = "{\"secret\": \"SecretToken\","
         for ((key, value) in toConvert) {
             jsonString = "$jsonString\"$key\": \"$value\", "
         }

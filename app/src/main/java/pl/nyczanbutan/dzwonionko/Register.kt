@@ -28,7 +28,7 @@ class Register : AppCompatActivity() {
             jsonMap["phone_number"] = phone_number
 
             val creator = JsonHandler()
-            val json = creator.convertToJson(jsonMap, "POST")
+            val json = creator.convertToJson(jsonMap)
             Log.d("json", json)
             val requestHandler = PostHttpRequestHandler().execute("http://88.156.94.28:5000/users", json)
             val responseCode = requestHandler.get()

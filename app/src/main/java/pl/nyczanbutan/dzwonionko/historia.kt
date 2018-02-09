@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 
+
 /**
  * A simple [Fragment] subclass.
  */
@@ -15,9 +16,10 @@ class historia : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+                              savedInstanceState: Bundle?): View {
+
+        super.onCreate(savedInstanceState)
         return inflater!!.inflate(R.layout.fragment_historia, container, false)
     }
+}
 
-}// Required empty public constructor
